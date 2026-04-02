@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Academia Clube de Arte e Luta - Hapkido Mestre Simões</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+      h1, h2, h3, .font-martial { font-family: 'Oswald', sans-serif; }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+      .animation-delay-200 { animation-delay: 0.2s; }
+      .animation-delay-400 { animation-delay: 0.4s; }
+      .animate-pulse-slow { animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.4; transform: scale(1.1); }
+        50% { opacity: 0.5; transform: scale(1.05); }
+      }
+      html.mobile-menu-open,
+      body.mobile-menu-open {
+        overflow: hidden;
+        height: 100%;
+        overscroll-behavior: none;
+      }
+      #mobile-menu-state {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+      }
+      #mobile-menu {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.3s ease-out, visibility 0s linear 0.3s;
+      }
+      #mobile-menu-panel {
+        transform: translateX(100%);
+        transition: transform 0.3s ease-out;
+        height: 100dvh;
+        min-height: 100dvh;
+      }
+      #mobile-menu-backdrop {
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
+      }
+      #mobile-menu-state:checked ~ #mobile-menu {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition-delay: 0s;
+      }
+      #mobile-menu-state:checked ~ #mobile-menu #mobile-menu-panel {
+        transform: translateX(0);
+      }
+      #mobile-menu-state:checked ~ #mobile-menu #mobile-menu-backdrop {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body class="bg-black text-white selection:bg-red-600 selection:text-white">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-red-900/30">
+      <input id="mobile-menu-state" type="checkbox" class="sr-only" aria-hidden="true" />
+      <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <img src="/images/logo_cademia.jpeg" alt="Logo" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-red-600 object-cover" />
+         </div>
+        
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex gap-8 font-bold uppercase text-sm tracking-widest">
+          <a href="#home" class="hover:text-red-600 transition-colors">Home</a>
+          <a href="#sobre" class="hover:text-red-600 transition-colors">Sobre</a>
+          <a href="#projeto-social" class="text-yellow-500 hover:text-yellow-400 transition-colors">Social</a>
+          <a href="#treinos" class="hover:text-red-600 transition-colors">Treinos</a>
+          <a href="#galeria" class="hover:text-red-600 transition-colors">Galeria</a>
+          <a href="/src/hapkido.html" class="hover:text-red-600 transition-colors">Hapkido</a>
+          <a href="#contato" class="hover:text-red-600 transition-colors">Contato</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+          <a href="https://wa.me/5500000000000" target="_blank" class="hidden sm:block bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full font-bold uppercase text-xs transition-all transform hover:scale-105">Agende sua Aula</a>
+
+          <div class="flex items-center gap-3">
+            <img src="/images/logo_federacao.jpeg" alt="Logo" class="h-12 w-12 rounded-full border-2 border-red-600 object-cover" />
+           </div>
+  
+          <!-- Mobile Menu Toggle -->
+          <label id="menu-toggle" for="mobile-menu-state" aria-controls="mobile-menu" aria-expanded="false" aria-label="Abrir menu" role="button" tabindex="0" class="md:hidden inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-red-600/60 focus:ring-offset-2 focus:ring-offset-black">
+            <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </label>
+        </div>
+        
+      </div>
+
+      <!-- Mobile Menu Overlay -->
+      <div id="mobile-menu" aria-hidden="true" role="dialog" aria-modal="true" class="fixed inset-0 z-[60] md:hidden">
+        <div id="mobile-menu-backdrop" data-mobile-menu-backdrop="true" class="absolute inset-0 bg-black/85 backdrop-blur-sm"></div>
+        <div class="relative ml-auto flex h-[100dvh] w-[min(88vw,22rem)] justify-end">
+          <div id="mobile-menu-panel" class="flex h-full w-full flex-col border-l border-white/10 bg-black px-5 py-6 shadow-2xl shadow-black/70">
+            <div class="flex items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <img src="/images/logo_cademia.jpeg" alt="Logo Academia" class="h-11 w-11 rounded-full border-2 border-red-600 object-cover" />
+                <div>
+                  <p class="text-xs uppercase tracking-[0.35em] text-red-500">Menu</p>
+                  <p class="text-[0.78rem] text-gray-400">Academia Clube de Arte e Luta</p>
+                </div>
+              </div>
+              <label id="menu-close" for="mobile-menu-state" aria-label="Fechar menu" role="button" tabindex="0" class="inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/40 text-white transition hover:bg-white/10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </label>
+            </div>
+
+            <nav class="mt-6 flex flex-1 flex-col justify-center gap-2 text-sm font-black uppercase tracking-[0.18em]">
+              <a href="#home" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Home</a>
+              <a href="#sobre" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Sobre</a>
+              <a href="#projeto-social" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-yellow-400 transition hover:border-yellow-500/40 hover:bg-white/10 hover:text-yellow-300">Projeto Social</a>
+              <a href="#treinos" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Treinos</a>
+              <a href="#galeria" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Galeria</a>
+              <a href="/src/hapkido.html" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Conheça o Hapkido</a>
+              <a href="#contato" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Contato</a>
+            </nav>
+
+            <a href="https://wa.me/5500000000000" target="_blank" class="mobile-link mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-red-600 px-6 py-3 text-[0.72rem] font-black uppercase tracking-[0.22em] text-white transition hover:bg-red-700">
+              Agende sua Aula
+            </a>
+          </div>
+        </div>
+      </div>
+      
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+          <img src="/images/treino.jpeg" alt="Hero Background" class="w-full h-full object-cover opacity-40 scale-110 animate-pulse-slow" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10 text-center">
+          <h1 class="text-5xl md:text-8xl font-black mb-4 animate-fade-in-up">CLUBE DE <span class="text-red-600">ARTE E LUTA</span></h1>
+          <p class="text-lg md:text-2xl text-gray-300 max-w-2xl mx-auto mb-8 animate-fade-in-up animation-delay-200">Domine a arte da defesa pessoal e fortaleça seu corpo e mente com o Hapkido Jik Bu Kwan.</p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-400">
+            <a href="https://wa.me/5500000000000" target="_blank" class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-black uppercase tracking-widest transition-all transform hover:scale-105 shadow-lg shadow-red-600/20">
+              Comece Agora
+            </a>
+            <a href="#projeto-social" class="bg-yellow-600 hover:bg-yellow-700 text-black px-8 py-4 rounded-lg font-black uppercase tracking-widest transition-all transform hover:scale-105">
+              Vagas Filantrópicas
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sobre -->
+      <section id="sobre" class="py-24 bg-neutral-950 border-y border-white/5">
+        <div class="container mx-auto px-4">
+          <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="relative">
+              <div class="absolute -top-4 -left-4 w-24 h-24 border-t-4 border-l-4 border-red-600"></div>
+              <img src="/images/dojo3.jpeg" alt="Mestre Simões" class="rounded-lg shadow-2xl relative z-10 grayscale hover:grayscale-0 transition-all duration-700" />
+              <div class="absolute -bottom-4 -right-4 w-24 h-24 border-b-4 border-r-4 border-red-600"></div>
+            </div>
+            <div>
+              <h2 class="text-4xl font-black mb-6 flex items-center gap-4 text-white">
+                <span class="w-12 h-1 bg-red-600"></span>
+                Nossa História
+              </h2>
+              <div class="prose prose-invert prose-red max-w-none text-gray-400 leading-relaxed space-y-4">
+                <p>O Clube de Arte e Luta é um centro de excelência dedicado ao ensino das artes marciais, com foco especial no Hapkido Jik Bu Kwan. Sob a liderança do Mestre Simões, nossa missão é proporcionar um ambiente de aprendizado seguro, disciplinado e acolhedor.</p>
+                <p>Acreditamos que a arte marcial vai além do combate físico; é uma ferramenta poderosa para o desenvolvimento do caráter, autoconfiança e equilíbrio emocional.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projeto Social -->
+      <section id="projeto-social" class="py-24 bg-black relative overflow-hidden">
+        <div class="container mx-auto px-4">
+          <div class="bg-zinc-900 border-2 border-yellow-600 rounded-3xl p-8 md:p-16 relative">
+            <div class="absolute top-0 right-0 bg-yellow-600 text-black font-bold py-2 px-12 transform rotate-45 translate-x-10 translate-y-4 uppercase tracking-widest text-xs">
+              Oportunidade
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 class="text-4xl md:text-6xl font-black mb-6 text-yellow-500">PROJETO SOCIAL</h2>
+                <h3 class="text-2xl font-bold mb-4 text-white">Vagas Filantrópicas Gratuitas</h3>
+                <p class="text-lg text-gray-300 mb-8">Oferecemos vagas gratuitas para quem busca disciplina, saúde e inclusão através do esporte, mas não possui condições financeiras. Nosso objetivo é democratizar o acesso às artes marciais.</p>
+                
+                <div class="space-y-6 mb-8">
+                  <div class="flex items-center gap-4">
+                    <div class="bg-yellow-600/20 p-3 rounded-full text-yellow-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span class="text-gray-200 font-medium">Inclusão Social através do Esporte</span>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <div class="bg-yellow-600/20 p-3 rounded-full text-yellow-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span class="text-gray-200 font-medium">Desenvolvimento de Disciplina e Foco</span>
+                  </div>
+                </div>
+
+                <a href="https://wa.me/5500000000000" target="_blank" class="inline-block bg-yellow-600 hover:bg-yellow-700 text-black px-10 py-4 rounded-xl font-black uppercase tracking-widest transition-all">
+                  Saiba como participar
+                </a>
+              </div>
+              <div class="relative">
+                <img src="/images/encontro_varios_lutadores.jpeg" alt="Projeto Social" class="rounded-2xl shadow-2xl border border-white/10" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Treinos -->
+      <section id="treinos" class="py-24 bg-neutral-950">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-6xl font-black mb-4">NOSSOS <span class="text-red-600">TREINOS</span></h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">Horários flexíveis e turmas para diferentes níveis de experiência.</p>
+          </div>
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-zinc-900 p-8 rounded-2xl border border-white/5 hover:border-red-600/50 transition-all group">
+              <div class="w-16 h-16 bg-red-600/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-red-600 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold mb-4">Hapkido Adulto</h3>
+              <p class="text-gray-400 mb-6">Foco em defesa pessoal real, condicionamento físico e técnicas de combate.</p>
+              <ul class="space-y-3 text-sm text-gray-300">
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span> Seg, Qua, Sex</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span> 19:00 às 20:30</li>
+              </ul>
+            </div>
+            <div class="bg-zinc-900 p-8 rounded-2xl border border-white/5 hover:border-red-600/50 transition-all group">
+              <div class="w-16 h-16 bg-red-600/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-red-600 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold mb-4">Hapkido Kids</h3>
+              <p class="text-gray-400 mb-6">Disciplina, respeito e coordenação motora de forma lúdica e segura.</p>
+              <ul class="space-y-3 text-sm text-gray-300">
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span> Ter e Qui</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span> 18:00 às 19:00</li>
+              </ul>
+            </div>
+            <div class="bg-zinc-900 p-8 rounded-2xl border border-white/5 hover:border-red-600/50 transition-all group">
+              <div class="w-16 h-16 bg-red-600/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-red-600 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold mb-4">Aulas Particulares</h3>
+              <p class="text-gray-400 mb-6">Treinamento personalizado focado nos seus objetivos específicos.</p>
+              <ul class="space-y-3 text-sm text-gray-300">
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span> Horários a combinar</li>
+                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-red-600 rounded-full"></span> Foco total no aluno</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Galeria -->
+      <section id="galeria" class="py-24 bg-black">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-6xl font-black mb-4">NOSSA <span class="text-red-600">GALERIA</span></h2>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <img src="/images/dojo1.jpeg" alt="Galeria 1" class="rounded-lg hover:scale-105 transition-all duration-500 cursor-pointer w-full h-48 object-cover" />
+        <img src="/images/dojo2.jpeg" alt="Galeria 2" class="rounded-lg hover:scale-105 transition-all duration-500 cursor-pointer w-full h-48 object-cover" />
+        <img src="/images/dojo4.jpeg" alt="Galeria 3" class="rounded-lg hover:scale-105 transition-all duration-500 cursor-pointer w-full h-48 object-cover" />
+        <img src="/images/treino3.jpeg" alt="Galeria 4" class="rounded-lg hover:scale-105 transition-all duration-500 cursor-pointer w-full h-48 object-cover" />
+        <img src="/images/treino4.jpeg" alt="Galeria 5" class="rounded-lg hover:scale-105 transition-all duration-500 cursor-pointer w-full h-48 object-cover" />
+        <img src="/images/encontro_varios_lutadores.jpeg" alt="Galeria 6" class="rounded-lg hover:scale-105 transition-all duration-500 cursor-pointer w-full h-48 object-cover" />
+        <img src="/images/academia.jpeg" alt="Galeria 7" class="rounded-lg hover:scale-105 transition-all duration-500 cursor-pointer w-full h-48 object-cover" />
+        <img src="/images/academia2.jpeg" alt="Galeria 8" class="rounded-lg hover:scale-105 transition-all duration-500 cursor-pointer w-full h-48 object-cover" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Contato -->
+      <section id="contato" class="py-24 bg-neutral-950">
+        <div class="container mx-auto px-4">
+          <div class="max-w-4xl mx-auto bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl border border-white/5">
+            <div class="grid md:grid-cols-2">
+              <div class="p-12 bg-red-600 text-white">
+                <h2 class="text-4xl font-black mb-8">VAMOS TREINAR?</h2>
+                <p class="max-w-sm text-white/85 mb-8">Visite nossa academia em Santo Agostinho ou fale com a equipe pelo telefone e WhatsApp.</p>
+                <div class="space-y-4">
+                  <div class="flex items-start gap-4 rounded-2xl bg-white/10 p-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mt-0.5 h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <div>
+                      <p class="text-xs uppercase tracking-[0.35em] text-white/70 mb-1">Endereço</p>
+                      <p>R. Alegria do Castro Neves, Nº 02 - Santo Agostinho, Salvador - BA, 40255-240</p>
+                    </div>
+                  </div>
+                  <a href="tel:+5571996375166" class="flex items-start gap-4 rounded-2xl bg-white/10 p-4 transition hover:bg-white/15">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mt-0.5 h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    <div>
+                      <p class="text-xs uppercase tracking-[0.35em] text-white/70 mb-1">Telefone</p>
+                      <p>(71) 99637-5166</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="p-12 space-y-6">
+                <div class="overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl shadow-black/40">
+                  <div class="border-b border-white/10 px-4 py-3">
+                    <p class="text-xs uppercase tracking-[0.35em] text-red-500">Localização</p>
+                    <p class="mt-1 text-sm text-gray-300">Veja a academia no mapa</p>
+                  </div>
+                  <div class="h-[320px] md:h-[360px]">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!4v1775150635355!6m8!1m7!1snA2IbHGz8H910fNiviz96A!2m2!1d-12.97319129977178!2d-38.49649405410869!3f209.17509614669783!4f12.147220332323883!5f0.7820865974627469"
+                      class="h-full w-full"
+                      style="border:0;"
+                      allowfullscreen=""
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade"
+                      title="Localização da academia"
+                    ></iframe>
+                  </div>
+                </div>
+
+             
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="py-12 bg-black border-t border-white/5 text-center text-gray-500 text-sm">
+      <div class="container mx-auto px-4">
+        <img src="/images/logo_cademia.jpeg" alt="Logo" class="h-12 w-12 rounded-full border border-red-600 mx-auto mb-6 grayscale opacity-50" />
+        <p>&copy; 2024 Academia Clube de Arte e Luta. Todos os direitos reservados.</p>
+        <p class="mt-2">Desenvolvido por <a href="" class="text-red-600 hover:text-red-500 transition-colors font-bold" target="_blank">Vanderlei Neto</a></p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
