@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/generate-cms-config.mjs",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },

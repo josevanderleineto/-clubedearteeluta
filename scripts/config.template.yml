@@ -1,0 +1,35 @@
+backend:
+  name: github
+  repo: __CMS_GITHUB_REPO__
+  branch: __CMS_GITHUB_BRANCH__
+  site_domain: __CMS_SITE_DOMAIN__
+  base_url: __CMS_BASE_URL__
+  auth_endpoint: oauth
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "pages"
+    label: "Páginas"
+    files:
+      - label: "Página inicial"
+        name: "home"
+        file: "index.html"
+        format: "html"
+        fields:
+          - label: "HTML da página"
+            name: "html"
+            widget: "code"
+            default_language: "html"
+            output_code_only: true
+      - label: "Página Hapkido"
+        name: "hapkido"
+        file: "src/hapkido.html"
+        format: "html"
+        fields:
+          - label: "HTML da página"
+            name: "html"
+            widget: "code"
+            default_language: "html"
+            output_code_only: true
