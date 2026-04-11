@@ -24,6 +24,12 @@ function escapeHtml(value: string) {
     .replaceAll("'", '&#39;');
 }
 
+function getBaseUrl(req: any) {
+  const proto = req.headers['x-forwarded-proto'] || 'https';
+  const host = req.headers.host;
+  return `${proto}://${host}`;
+}
+
 function buildErrorPage(message: string) {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -62,6 +68,18 @@ function buildErrorPage(message: string) {
 </html>`;
 }
 
+function buildGitHubErrorMessage(tokenPayload: any, status: number) {
+  if (tokenPayload?.error_description) {
+    return `GitHub token exchange failed: ${tokenPayload.error_description}`;
+  }
+
+  if (tokenPayload?.error) {
+    return `GitHub token exchange failed with error: ${tokenPayload.error}`;
+  }
+
+  return `GitHub did not return an access token. HTTP status: ${status}.`;
+}
+
 export default async function handler(req: any, res: any) {
   const clientId = process.env.OAUTH_GITHUB_CLIENT_ID;
   const clientSecret = process.env.OAUTH_GITHUB_CLIENT_SECRET;
@@ -76,6 +94,8 @@ export default async function handler(req: any, res: any) {
   const { code, state } = req.query || {};
   const cookies = parseCookies(req.headers.cookie);
   const expectedState = cookies.decap_oauth_state;
+  const baseUrl = getBaseUrl(req);
+  const redirectUri = `${baseUrl}/oauth/callback`;
 
   if (!code || !state || !expectedState || state !== expectedState) {
     res.statusCode = 400;
@@ -96,6 +116,7 @@ export default async function handler(req: any, res: any) {
       client_secret: clientSecret,
       code,
       state,
+      redirect_uri: redirectUri,
     }),
   });
 
@@ -103,9 +124,17 @@ export default async function handler(req: any, res: any) {
   const token = tokenPayload?.access_token;
 
   if (!token) {
+    console.error('[OAuth] GitHub token exchange failed', {
+      status: tokenResponse.status,
+      error: tokenPayload?.error,
+      error_description: tokenPayload?.error_description,
+      error_uri: tokenPayload?.error_uri,
+      redirect_uri: redirectUri,
+    });
+
     res.statusCode = 502;
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.end(buildErrorPage('GitHub did not return an access token.'));
+    res.end(buildErrorPage(buildGitHubErrorMessage(tokenPayload, tokenResponse.status)));
     return;
   }
 
