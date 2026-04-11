@@ -1,9 +1,11 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const rootDir = process.cwd();
 const templatePath = resolve(rootDir, 'scripts/config.template.yml');
-const outputPath = resolve(rootDir, 'public/admin/config.yml');
+const adminOutputPath = resolve(rootDir, 'public/admin/config.yml');
+const rootOutputPath = resolve(rootDir, 'public/config.yml');
 
 function normalizeSiteUrl(value) {
   if (!value) return 'http://localhost:5173';
@@ -16,7 +18,7 @@ function envOrDefault(name, fallback) {
   return value && value.trim() ? value.trim() : fallback;
 }
 
-async function main() {
+export async function generateCmsConfig() {
   const template = await readFile(templatePath, 'utf8');
 
   const siteUrl = normalizeSiteUrl(
@@ -32,8 +34,9 @@ async function main() {
     .replaceAll('__CMS_SITE_DOMAIN__', siteDomain)
     .replaceAll('__CMS_BASE_URL__', siteUrl);
 
-  await mkdir(dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, generated, 'utf8');
+  await mkdir(dirname(adminOutputPath), { recursive: true });
+  await writeFile(adminOutputPath, generated, 'utf8');
+  await writeFile(rootOutputPath, generated, 'utf8');
 
   if (githubRepo === 'OWNER/REPO') {
     console.warn(
@@ -41,10 +44,15 @@ async function main() {
     );
   }
 
-  console.log(`[CMS] Generated ${outputPath}`);
+  console.log(`[CMS] Generated ${adminOutputPath}`);
+  console.log(`[CMS] Generated ${rootOutputPath}`);
 }
 
-main().catch((error) => {
-  console.error('[CMS] Failed to generate config:', error);
-  process.exit(1);
-});
+const isDirectRun = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (isDirectRun) {
+  generateCmsConfig().catch((error) => {
+    console.error('[CMS] Failed to generate config:', error);
+    process.exit(1);
+  });
+}

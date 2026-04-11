@@ -25,6 +25,7 @@ build/
 .next/
 out/
 public/admin/config.yml
+public/config.yml
 
 # Logs
 logs/
