@@ -14,7 +14,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html',
-        hapkido: 'src/hapkido.html',
+        hapkido: 'hapkido.html',
       },
     },
   },

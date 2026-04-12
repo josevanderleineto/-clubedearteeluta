@@ -68,12 +68,18 @@
     </style>
   </head>
   <body class="bg-black text-white selection:bg-red-600 selection:text-white">
+    <!--
+      Manutenção rápida:
+      - Os textos da página principal ficam neste arquivo: index.html
+      - A página "Conheça o Hapkido" fica em: hapkido.html
+      - O JavaScript em src/main.ts e src/navigation.ts controla apenas menu e rolagem
+    -->
     <!-- Header -->
     <header class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-red-900/30">
       <input id="mobile-menu-state" type="checkbox" class="sr-only" aria-hidden="true" />
       <div class="container mx-auto px-4 py-3 flex justify-between items-center">
         <div class="flex items-center gap-3">
-          <img src="/images/logo_cademia.jpeg" alt="Logo" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-red-600 object-cover" />
+          <img src="/images/logo_cademia.jpeg" alt="Logo" class="h-12 w-12 sm:h-14 sm:w-14 rounded-full border-2 border-red-600 object-cover" />
          </div>
         
         <!-- Desktop Nav -->
@@ -83,15 +89,15 @@
           <a href="#projeto-social" class="text-yellow-500 hover:text-yellow-400 transition-colors">Social</a>
           <a href="#treinos" class="hover:text-red-600 transition-colors">Treinos</a>
           <a href="#galeria" class="hover:text-red-600 transition-colors">Galeria</a>
-          <a href="/src/hapkido.html" class="hover:text-red-600 transition-colors">Hapkido</a>
+          <a href="/hapkido.html" class="hover:text-red-600 transition-colors">Hapkido</a>
           <a href="#contato" class="hover:text-red-600 transition-colors">Contato</a>
         </nav>
 
-        <div class="flex items-center gap-4">
-          <a href="https://wa.me/5500000000000" target="_blank" class="hidden sm:block bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full font-bold uppercase text-xs transition-all transform hover:scale-105">Agende sua Aula</a>
+        <div class="flex items-center gap-3 sm:gap-4">
+          <a href="https://wa.me/5571996375166" target="_blank" class="hidden sm:block bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full font-bold uppercase text-xs transition-all transform hover:scale-105">Agende sua Aula</a>
 
           <div class="flex items-center gap-3">
-            <img src="/images/logo_federacao.jpeg" alt="Logo" class="h-12 w-12 rounded-full border-2 border-red-600 object-cover" />
+            <img src="/images/logo_federacao.jpeg" alt="Logo" class="h-12 w-12 sm:h-14 sm:w-14 rounded-full border-2 border-red-600 object-cover" />
            </div>
   
           <!-- Mobile Menu Toggle -->
@@ -111,7 +117,7 @@
           <div id="mobile-menu-panel" class="flex h-full w-full flex-col border-l border-white/10 bg-black px-5 py-6 shadow-2xl shadow-black/70">
             <div class="flex items-center justify-between gap-4">
               <div class="flex items-center gap-3">
-                <img src="/images/logo_cademia.jpeg" alt="Logo Academia" class="h-11 w-11 rounded-full border-2 border-red-600 object-cover" />
+                <img src="/images/logo_cademia.jpeg" alt="Logo Academia" class="h-12 w-12 rounded-full border-2 border-red-600 object-cover" />
                 <div>
                   <p class="text-xs uppercase tracking-[0.35em] text-red-500">Menu</p>
                   <p class="text-[0.78rem] text-gray-400">Academia Clube de Arte e Luta</p>
@@ -130,11 +136,11 @@
               <a href="#projeto-social" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-yellow-400 transition hover:border-yellow-500/40 hover:bg-white/10 hover:text-yellow-300">Projeto Social</a>
               <a href="#treinos" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Treinos</a>
               <a href="#galeria" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Galeria</a>
-              <a href="/src/hapkido.html" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Conheça o Hapkido</a>
+              <a href="/hapkido.html" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Conheça o Hapkido</a>
               <a href="#contato" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Contato</a>
             </nav>
 
-            <a href="https://wa.me/5500000000000" target="_blank" class="mobile-link mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-red-600 px-6 py-3 text-[0.72rem] font-black uppercase tracking-[0.22em] text-white transition hover:bg-red-700">
+            <a href="https://wa.me/5571996375166" target="_blank" class="mobile-link mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-red-600 px-6 py-3 text-[0.72rem] font-black uppercase tracking-[0.22em] text-white transition hover:bg-red-700">
               Agende sua Aula
             </a>
           </div>
@@ -157,7 +163,7 @@
           <h1 class="text-5xl md:text-8xl font-black mb-4 animate-fade-in-up">CLUBE DE <span class="text-red-600">ARTE E LUTA</span><span class="mt-3 block text-3xl md:text-6xl text-white">HAPKIDO <span class="text-red-600">SIMÕES</span></span></h1>
           <p class="text-lg md:text-2xl text-gray-300 max-w-2xl mx-auto mb-8 animate-fade-in-up animation-delay-200">Domine a arte da defesa pessoal e fortaleça seu corpo e mente com o Hapkido Kuk Sool WON.</p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-400">
-            <a href="https://wa.me/5500000000000" target="_blank" class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-black uppercase tracking-widest transition-all transform hover:scale-105 shadow-lg shadow-red-600/20">
+            <a href="https://wa.me/5571996375166" target="_blank" class="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-black uppercase tracking-widest transition-all transform hover:scale-105 shadow-lg shadow-red-600/20">
               Comece Agora
             </a>
             <a href="#projeto-social" class="bg-yellow-600 hover:bg-yellow-700 text-black px-8 py-4 rounded-lg font-black uppercase tracking-widest transition-all transform hover:scale-105">
@@ -220,9 +226,17 @@
                     </div>
                     <span class="text-gray-200 font-medium">Desenvolvimento de Disciplina e Foco</span>
                   </div>
+                  <div class="flex items-center gap-4">
+                    <div class="bg-yellow-600/20 p-3 rounded-full text-yellow-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span class="text-gray-200 font-medium">Núcleo de Esportes de Lutas e Combate - SUDESB - Governo da Bahia</span>
+                  </div>
                 </div>
 
-                <a href="https://wa.me/5500000000000" target="_blank" class="inline-block bg-yellow-600 hover:bg-yellow-700 text-black px-10 py-4 rounded-xl font-black uppercase tracking-widest transition-all">
+                <a href="https://wa.me/5571996375166" target="_blank" class="inline-block bg-yellow-600 hover:bg-yellow-700 text-black px-10 py-4 rounded-xl font-black uppercase tracking-widest transition-all">
                   Saiba como participar
                 </a>
               </div>
@@ -364,7 +378,7 @@
 
     <footer class="py-12 bg-black border-t border-white/5 text-center text-gray-500 text-sm">
       <div class="container mx-auto px-4">
-        <img src="/images/logo_cademia.jpeg" alt="Logo" class="h-12 w-12 rounded-full border border-red-600 mx-auto mb-6 grayscale opacity-50" />
+        <img src="/images/logo_cademia.jpeg" alt="Logo" class="h-16 w-16 rounded-full border border-red-600 mx-auto mb-6 grayscale opacity-50" />
         <p>&copy; 2024 Academia Clube de Arte e Luta. Todos os direitos reservados.</p>
         <p class="mt-2">Desenvolvido por <a href="" class="text-red-600 hover:text-red-500 transition-colors font-bold" target="_blank">Vanderlei Neto</a></p>
       </div>
