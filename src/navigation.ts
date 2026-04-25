@@ -6,6 +6,10 @@ type MobileMenuSelectors = {
   link: string;
 };
 
+type MobileMenuOptions = Partial<MobileMenuSelectors> & {
+  desktopBreakpoint?: number;
+};
+
 const defaultSelectors: MobileMenuSelectors = {
   toggle: '#menu-toggle',
   close: '#menu-close',
@@ -13,6 +17,8 @@ const defaultSelectors: MobileMenuSelectors = {
   state: '#mobile-menu-state',
   link: '.mobile-link',
 };
+
+const defaultDesktopBreakpoint = 1024;
 
 let lockedScrollY = 0;
 let scrollLocked = false;
@@ -74,7 +80,8 @@ function setMenuState(
   syncMenuState(menuState, menu, toggle);
 }
 
-export function initMobileMenu(selectors: Partial<MobileMenuSelectors> = {}) {
+export function initMobileMenu(options: MobileMenuOptions = {}) {
+  const { desktopBreakpoint = defaultDesktopBreakpoint, ...selectors } = options;
   const resolved = { ...defaultSelectors, ...selectors };
   const menuToggle = document.querySelector<HTMLElement>(resolved.toggle);
   const menuClose = document.querySelector<HTMLElement>(resolved.close);
@@ -91,6 +98,11 @@ export function initMobileMenu(selectors: Partial<MobileMenuSelectors> = {}) {
   const openMenu = () => setMenuState(menuState, mobileMenu, menuToggle, true);
   const closeMenu = () => setMenuState(menuState, mobileMenu, menuToggle, false);
   const toggleMenu = () => setMenuState(menuState, mobileMenu, menuToggle, !menuState.checked);
+  const syncResponsiveMenuState = () => {
+    if (window.innerWidth >= desktopBreakpoint && menuState.checked) {
+      closeMenu();
+    }
+  };
 
   syncMenuState(menuState, mobileMenu, menuToggle);
 
@@ -138,22 +150,36 @@ export function initMobileMenu(selectors: Partial<MobileMenuSelectors> = {}) {
     }
   });
 
+  syncResponsiveMenuState();
+  window.addEventListener('resize', syncResponsiveMenuState);
+
   return { openMenu, closeMenu, toggleMenu };
 }
 
 export function initHeaderScroll() {
   const header = document.querySelector<HTMLElement>('header');
+  const headerShell = header?.querySelector<HTMLElement>('.header-shell') ?? header;
 
-  if (!header) return;
+  if (!header || !headerShell) return;
+
+  const syncHeaderState = () => {
+    if (window.scrollY > 50) {
+      header.classList.add('bg-black/95');
+      header.classList.remove('bg-black/80');
+      headerShell.classList.add('py-2');
+      headerShell.classList.remove('py-3');
+    } else {
+      header.classList.remove('bg-black/95');
+      header.classList.add('bg-black/80');
+      headerShell.classList.remove('py-2');
+      headerShell.classList.add('py-3');
+    }
+  };
+
+  syncHeaderState();
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      header.classList.add('bg-black/95', 'py-2');
-      header.classList.remove('bg-black/80', 'py-3');
-    } else {
-      header.classList.remove('bg-black/95', 'py-2');
-      header.classList.add('bg-black/80', 'py-3');
-    }
+    syncHeaderState();
   });
 }
 

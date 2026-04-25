@@ -35,6 +35,7 @@
         transition: transform 0.3s ease-out;
         height: 100dvh;
         min-height: 100dvh;
+        padding-bottom: calc(env(safe-area-inset-bottom) + 1.5rem);
       }
       #mobile-menu-backdrop {
         opacity: 0;
@@ -52,6 +53,36 @@
       #mobile-menu-state:checked ~ #mobile-menu #mobile-menu-backdrop {
         opacity: 1;
       }
+      .header-shell {
+        padding-inline: clamp(1rem, 3vw, 1.5rem);
+      }
+      .nav-logo {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 3.25rem;
+        height: 3.25rem;
+        overflow: hidden;
+        border-radius: 9999px;
+        border: 2px solid rgb(220 38 38);
+        background: rgba(0, 0, 0, 0.8);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+      }
+      .nav-logo img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+      }
+      @media (min-width: 640px) {
+        .nav-logo {
+          width: 3.75rem;
+          height: 3.75rem;
+        }
+      }
     </style>
   </head>
   <body class="text-white selection:bg-red-600 selection:text-white" style="background: radial-gradient(circle at top, rgba(185, 28, 28, 0.18), transparent 34%), linear-gradient(180deg, #0b0b0b 0%, #000 58%);">
@@ -62,57 +93,74 @@
     -->
     <header class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-red-900/30">
       <input id="mobile-menu-state" type="checkbox" class="sr-only" aria-hidden="true" />
-      <div class="container mx-auto px-4 py-3 flex justify-between items-center gap-4">
-        <div class="flex items-center gap-3">
-          <img src="/images/logo_cademia.jpeg" alt="Logo da academia" class="h-12 w-12 sm:h-14 sm:w-14 rounded-full border-2 border-red-600 object-cover" />
+      <div class="header-shell container mx-auto py-3">
+        <div class="flex items-center justify-between gap-3 sm:gap-4 lg:gap-8">
+          <a href="/" class="flex shrink-0 items-center gap-3 sm:gap-4" aria-label="Voltar para a home">
+            <span class="nav-logo">
+              <img src="/images/logo_cademia.jpeg" alt="Logo da academia" />
+            </span>
+            <span class="hidden xl:block">
+              <span class="block text-[0.62rem] font-semibold uppercase tracking-[0.36em] text-red-500/90">Clube de Arte e Luta</span>
+              <span class="mt-1 block text-sm font-bold uppercase tracking-[0.18em] text-white">Hapkido Simões</span>
+            </span>
+          </a>
+
+          <nav class="hidden lg:flex flex-1 items-center justify-center gap-4 pl-4 text-[0.7rem] font-bold uppercase tracking-[0.16em] xl:gap-6 xl:pl-8 xl:text-sm xl:tracking-widest">
+            <a href="/" class="hover:text-red-600 transition-colors">Home</a>
+            <a href="#origem" class="hover:text-red-600 transition-colors">Origem</a>
+            <a href="#brasil" class="hover:text-red-600 transition-colors">Brasil</a>
+            <a href="#beneficios" class="hover:text-red-600 transition-colors">Benefícios</a>
+            <a href="#contato" class="hover:text-red-600 transition-colors">Contato</a>
+          </nav>
+
+          <div class="flex shrink-0 items-center gap-2.5 sm:gap-3 lg:gap-4">
+            <a
+              href="https://wa.me/5571996375166"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hidden lg:inline-flex bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full font-bold uppercase text-xs transition-all transform hover:scale-105"
+            >
+              Agende sua Aula
+            </a>
+
+            <label
+              id="menu-toggle"
+              for="mobile-menu-state"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+              aria-label="Abrir menu"
+              role="button"
+              tabindex="0"
+              class="lg:hidden inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-red-600/60 focus:ring-offset-2 focus:ring-offset-black"
+            >
+              <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            </label>
+          </div>
         </div>
 
-        <nav class="hidden md:flex gap-6 font-bold uppercase text-xs lg:text-sm tracking-widest">
-          <a href="/" class="hover:text-red-600 transition-colors">Home</a>
-          <a href="#origem" class="hover:text-red-600 transition-colors">Origem</a>
-          <a href="#brasil" class="hover:text-red-600 transition-colors">Brasil</a>
-          <a href="#beneficios" class="hover:text-red-600 transition-colors">Benefícios</a>
-          <a href="#contato" class="hover:text-red-600 transition-colors">Contato</a>
-        </nav>
-
-        <div class="flex items-center gap-3 sm:gap-4">
+        <div class="mt-3 flex justify-center lg:hidden">
           <a
-            href="https://wa.me/5571996375166"
+            href="https://wa.me/5571996375166?text=Olá! Tenho interesse em conhecer o Hapkido."
             target="_blank"
             rel="noopener noreferrer"
-            class="hidden sm:block bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full font-bold uppercase text-xs transition-all transform hover:scale-105"
+            class="inline-flex w-full max-w-xs items-center justify-center rounded-full bg-red-600 px-5 py-3 text-[0.7rem] font-bold uppercase tracking-[0.22em] text-white transition-all hover:bg-red-700 sm:max-w-sm"
           >
             Agende sua Aula
           </a>
-
-          <div class="flex items-center gap-3">
-            <img src="/images/logo_federacao.jpeg" alt="Logo da federação" class="h-12 w-12 sm:h-14 sm:w-14 rounded-full border-2 border-red-600 object-cover" />
-          </div>
-
-          <label
-            id="menu-toggle"
-            for="mobile-menu-state"
-            aria-controls="mobile-menu"
-            aria-expanded="false"
-            aria-label="Abrir menu"
-            role="button"
-            tabindex="0"
-            class="md:hidden inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-red-600/60 focus:ring-offset-2 focus:ring-offset-black"
-          >
-            <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
-          </label>
         </div>
       </div>
 
-      <div id="mobile-menu" aria-hidden="true" role="dialog" aria-modal="true" class="fixed inset-0 z-[60] md:hidden">
+      <div id="mobile-menu" aria-hidden="true" role="dialog" aria-modal="true" class="fixed inset-0 z-[60] lg:hidden">
         <div id="mobile-menu-backdrop" data-mobile-menu-backdrop="true" class="absolute inset-0 bg-black/85 backdrop-blur-md"></div>
-        <div class="relative ml-auto flex h-[100dvh] w-[min(88vw,22rem)] justify-end">
+        <div class="relative ml-auto flex h-[100dvh] w-full max-w-[22rem] justify-end">
           <div id="mobile-menu-panel" class="flex h-full w-full flex-col border-l border-white/10 bg-black px-5 py-6 shadow-2xl shadow-black/70">
             <div class="flex items-center justify-between gap-4">
               <div class="flex items-center gap-3">
-                <img src="/images/logo_cademia.jpeg" alt="Logo da academia" class="h-12 w-12 rounded-full border-2 border-red-600 object-cover" />
+                <span class="nav-logo">
+                  <img src="/images/logo_cademia.jpeg" alt="Logo da academia" />
+                </span>
                 <div>
                   <p class="text-xs uppercase tracking-[0.35em] text-red-500">Menu</p>
                   <p class="text-[0.78rem] text-gray-400">Navegação rápida</p>
@@ -125,12 +173,12 @@
               </label>
             </div>
 
-            <nav class="mt-6 flex flex-1 flex-col justify-center gap-2 text-sm font-black uppercase tracking-[0.18em]">
-              <a href="/" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Home</a>
-              <a href="#origem" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Origem</a>
-              <a href="#brasil" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Brasil</a>
-              <a href="#beneficios" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Benefícios</a>
-              <a href="#contato" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Contato</a>
+            <nav class="mt-8 flex flex-1 flex-col justify-center gap-2.5 text-sm font-black uppercase tracking-[0.18em]">
+              <a href="/" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3.5 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Home</a>
+              <a href="#origem" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3.5 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Origem</a>
+              <a href="#brasil" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3.5 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Brasil</a>
+              <a href="#beneficios" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3.5 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Benefícios</a>
+              <a href="#contato" class="mobile-link flex items-center justify-between rounded-2xl border border-white/5 bg-black/40 px-4 py-3.5 text-white transition hover:border-red-600/40 hover:bg-white/10 hover:text-red-500">Contato</a>
             </nav>
 
             <a
@@ -146,7 +194,7 @@
       </div>
     </header>
 
-    <main class="pt-24">
+    <main class="pt-28 sm:pt-32 lg:pt-28">
       <section id="hapkido" class="py-16 md:py-24">
         <div class="container mx-auto px-4">
           <div class="mb-12 max-w-3xl">
